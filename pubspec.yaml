@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -30,18 +31,22 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
 
+  assets:
+    # svg
+    - assets/svg/
+
   fonts:
-    - family: gotham
+    - family: roboto
       fonts:
-        - asset: assets/fonts/gotham_bold.ttf
+        - asset: assets/fonts/roboto_bold.ttf
           weight: 900
-        - asset: assets/fonts/gotham_bold.ttf
+        - asset: assets/fonts/roboto_bold.ttf
           weight: 700
-        - asset: assets/fonts/gotham_bold.ttf
+        - asset: assets/fonts/roboto_bold.ttf
           weight: 500
-        - asset: assets/fonts/gotham_light.ttf
+        - asset: assets/fonts/roboto_regular.ttf
           weight: 400
-        - asset: assets/fonts/gotham_light.ttf
+        - asset: assets/fonts/roboto_regular.ttf
           weight: 300
-        - asset: assets/fonts/gotham_light.ttf
+        - asset: assets/fonts/roboto_regular.ttf
           weight: 100
