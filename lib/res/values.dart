@@ -6,4 +6,5 @@ class Size {
   static const s8 = 8.0;
   static const s10 = 10.0;
   static const s16 = 16.0;
+  static const s20 = 20.0;
 }

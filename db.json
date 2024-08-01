@@ -2,7 +2,7 @@
   "user": {
     "id": "1",
     "name": "User",
-    "balance": "500"
+    "balance": 500
   },
   "transactions": []
 }
