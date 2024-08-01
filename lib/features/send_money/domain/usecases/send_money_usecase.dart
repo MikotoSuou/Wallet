@@ -20,6 +20,12 @@ class SendMoneyUseCase {
       return const Left(InsufficientBalanceFailure());
     }
 
-    return _repository.sendMoney(amountToSend);
+    final result = await _repository.sendMoney(amountToSend);
+
+    if (result.isLeft()) {
+      return result;
+    }
+
+    return await _repository.updateBalance(balance, amountToSend);
   }
 }

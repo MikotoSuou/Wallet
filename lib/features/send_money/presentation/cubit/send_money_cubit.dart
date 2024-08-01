@@ -21,7 +21,6 @@ class SendMoneyCubit extends Cubit<SendMoneyState> {
   Future<void> sendClicked() async {
     emit(state.copyWith(status: Status.loading));
     // await Future.delayed(const Duration(seconds: 3));
-    print("BJTEST");
     final result = await _sendMoneyUseCase(balance: _balance, amountToSend: state.amount);
 
     result.fold(

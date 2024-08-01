@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:wallet/features/home/data/responses/user_response.dart';
+import 'package:wallet/features/send_money/data/requests/update_balance_request.dart';
 
 import '../../../features/send_money/data/requests/send_money_request.dart';
 
@@ -11,14 +12,12 @@ part 'api_service.g.dart';
 abstract class ApiService {
   factory ApiService(Dio dio) = _ApiService;
 
-  @GET("user")
+  @GET("users/1")
   Future<UserResponse> userService();
   
   @POST("transactions")
   Future<void> sendMoneyService(@Body() SendMoneyRequest request);
 
-  // @GET("products/{PRODUCT_ID}")
-  // Future<HttpResponse<ProductDetailResponse>> productDetailService(
-  //   @Path("PRODUCT_ID") String productId,
-  // );
+  @PATCH("users/1")
+  Future<void> updateBalanceService(@Body() UpdateBalanceRequest request);
 }

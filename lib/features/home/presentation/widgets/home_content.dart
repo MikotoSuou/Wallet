@@ -9,6 +9,7 @@ import 'package:wallet/core/widgets/decorations.dart';
 import 'package:wallet/features/home/presentation/cubit/home_cubit.dart';
 import 'package:wallet/features/home/presentation/widgets/home_balance.dart';
 import 'package:wallet/features/home/presentation/widgets/home_balance_toggle.dart';
+import 'package:wallet/features/home/presentation/widgets/home_send_money_button.dart';
 import 'package:wallet/res/assets.dart';
 import 'package:wallet/res/colors.dart';
 import 'package:wallet/res/strings.dart';
@@ -54,12 +55,8 @@ class HomeContent extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: PrimaryButton(
-                        icon: SvgPicture.asset(SvgAssets.icSendMoney),
-                        onClicked: () => context.push(Routes.sendMoney, extra: context.read<HomeCubit>().state.balance),
-                        text: Strings.send,
-                      ),
+                    const Expanded(
+                      child: HomeSendMoneyButton()
                     ),
 
                     const Space(width: values.Size.s10),

@@ -12,8 +12,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> getUser() async {
     emit(state.copyWith(status: HomeStatus.loading));
+
     final result = await _getUser();
-    await Future.delayed(const Duration(seconds: 3));
 
     result.fold(
       (error) => emit(state.copyWith(status: HomeStatus.failed, error: error.message)),
