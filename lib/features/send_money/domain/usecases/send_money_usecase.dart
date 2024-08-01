@@ -4,19 +4,19 @@ import 'package:wallet/features/send_money/domain/repository/send_money_reposito
 
 import '../../../../core/error/failure.dart';
 
-class SendMoneyUsecase {
+class SendMoneyUseCase {
   final SendMoneyRepository _repository;
-  SendMoneyUsecase(this._repository);
+  SendMoneyUseCase(this._repository);
 
   Future<Either<Failure, void>> call({
-    required double availableBalance,
+    required double balance,
     required double amountToSend,
   }) async {
-    if(amountToSend == 0) {
+    if (amountToSend == 0) {
       return const Left(InvalidAmountFailure());
     }
 
-    if(amountToSend > availableBalance) {
+    if (amountToSend > balance) {
       return const Left(InsufficientBalanceFailure());
     }
 

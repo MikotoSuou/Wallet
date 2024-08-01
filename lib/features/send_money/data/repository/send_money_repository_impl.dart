@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:wallet/core/data_source/remote/api_service.dart';
 import 'package:wallet/core/error/failure.dart';
+import 'package:wallet/core/utils/helpers.dart';
 import 'package:wallet/core/utils/network_info.dart';
 import 'package:wallet/features/send_money/data/requests/send_money_request.dart';
 import 'package:wallet/features/send_money/domain/repository/send_money_repository.dart';
@@ -21,7 +22,7 @@ class SendMoneyRepositoryImpl implements SendMoneyRepository {
     }
 
     try {
-      final request = SendMoneyRequest(amount: amount, date: "current date", time: "current time");
+      final request = SendMoneyRequest(amount: amount, date: currentDate, time: currentTime);
       final response = await api.sendMoneyService(request);
       return Right(response);
     } catch (error) {

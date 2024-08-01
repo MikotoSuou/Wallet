@@ -60,7 +60,7 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-    onTap: (){},
+    onTap: onClicked,
     borderRadius: BorderRadius.circular(values.Size.s16),
     child: Ink(
       decoration: BoxDecoration(

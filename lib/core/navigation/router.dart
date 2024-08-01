@@ -28,8 +28,9 @@ final router = GoRouter(
       parentNavigatorKey: rootNavigatorKey,
       path: Routes.sendMoney,
       pageBuilder: (context, state) {
+        initSendMoneyDependencies();
         final args = state.extra as double;
-        return AppTransition.slide(state: state, child: SendMoneyScreen(availableBalance: args));
+        return AppTransition.slide(state: state, child: SendMoneyScreen(balance: args));
       }
     ),
   ],
