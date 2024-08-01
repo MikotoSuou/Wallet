@@ -5,7 +5,7 @@ class Constants {
   static const String emptyString = "";
 
   // api
-  static const String baseUrl = "http://192.168.250.95:3000/";
+  static const String baseUrl = "http://192.168.1.7:3000/";
   static const Map<String, String> headers = {
     "content-type": "application/json; charset=utf-8",
     "accept": "application/json; charset=utf-8",

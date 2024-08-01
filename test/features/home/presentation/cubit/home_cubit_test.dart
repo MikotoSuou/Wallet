@@ -7,16 +7,15 @@ import 'package:wallet/core/error/failure.dart';
 import 'package:wallet/core/utils/constants.dart';
 import 'package:wallet/features/home/domain/entities/user_detail.dart';
 import 'package:wallet/features/home/presentation/cubit/home_cubit.dart';
-
-import '../../domain/repository/home_repository_mock.mocks.dart';
+import '../../domain/usecases/get_user_usecase_mock.mocks.dart';
 
 void main() {
-  late MockHomeRepository repository;
+  late MockGetUserUseCase getUserUseCase;
   late HomeCubit cubit;
 
   setUp(() {
-    repository = MockHomeRepository();
-    cubit = HomeCubit(repository);
+    getUserUseCase = MockGetUserUseCase();
+    cubit = HomeCubit(getUserUseCase);
   });
 
   test("initial state should be HomeStatus.initial", () {
@@ -25,7 +24,7 @@ void main() {
 
   group("getUser", () {
     const userDetail = UserDetail(id: "1", name: "test", balance: 1.0);
-    void setUpMockGetUserSuccess() => when(repository.getUser())
+    void setUpMockGetUserSuccess() => when(getUserUseCase())
         .thenAnswer((_) async => const Right(userDetail));
 
     blocTest<HomeCubit, HomeState>(
@@ -33,7 +32,7 @@ void main() {
       setUp: () => setUpMockGetUserSuccess(),
       build: () => cubit,
       act: (cubit) => cubit.getUser(),
-      verify: (_) => verify(repository.getUser()).called(1),
+      verify: (_) => verify(getUserUseCase()).called(1),
       expect: () => [
         const HomeState(
           status: HomeStatus.loading,
@@ -53,7 +52,7 @@ void main() {
       ]
     );
 
-    void setUpMockGetUserFailed() => when(repository.getUser())
+    void setUpMockGetUserFailed() => when(getUserUseCase())
         .thenAnswer((_) async => const Left(ServerFailure()));
 
     blocTest<HomeCubit, HomeState>(
@@ -61,7 +60,7 @@ void main() {
       setUp: () => setUpMockGetUserFailed(),
       build: () => cubit,
       act: (cubit) => cubit.getUser(),
-      verify: (_) => verify(repository.getUser()).called(1),
+      verify: (_) => verify(getUserUseCase()).called(1),
       expect: () => [
         const HomeState(
           status: HomeStatus.loading,
