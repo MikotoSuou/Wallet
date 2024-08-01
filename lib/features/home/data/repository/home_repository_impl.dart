@@ -1,12 +1,9 @@
-
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:wallet/core/data_source/remote/api_service.dart';
 import 'package:wallet/core/error/failure.dart';
 import 'package:wallet/core/utils/network_info.dart';
 import 'package:wallet/features/home/data/mappers/user_response_mapper.dart';
-import 'package:wallet/features/home/domain/entities/User.dart';
+import 'package:wallet/features/home/domain/entities/user_detail.dart';
 import 'package:wallet/features/home/domain/repository/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -19,7 +16,7 @@ class HomeRepositoryImpl implements HomeRepository {
   );
 
   @override
-  Future<Either<Failure, User>> getUser() async {
+  Future<Either<Failure, UserDetail>> getUser() async {
     if(!await networkInfo.isNetworkConnected) {
       return const Left(NetworkFailure());
     }
