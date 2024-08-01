@@ -12,6 +12,7 @@ ThemeData get applicationTheme => ThemeData(
   scaffoldBackgroundColor: ColorManager.background,
   textTheme: _textTheme,
   cardTheme: _cardTheme,
+  inputDecorationTheme: _inputDecorationTheme,
 );
 
 /// text theme
@@ -39,4 +40,22 @@ CardTheme get _cardTheme => CardTheme(
   elevation: 0.5,
   margin: EdgeInsets.zero,
   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(values.Size.s16)),
+);
+
+/// input decoration theme
+InputDecorationTheme get _inputDecorationTheme => InputDecorationTheme(
+  contentPadding: const EdgeInsets.symmetric(vertical: values.Size.s10, horizontal: values.Size.s16),
+  hintStyle: regularTextStyle(color: ColorManager.darkGray, fontSize: FontSize.s14),
+  labelStyle: mediumTextStyle(color: ColorManager.black, fontSize: FontSize.s14),
+  fillColor: ColorManager.secondary,
+  filled: true,
+  border: InputBorder.none,
+  enabledBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: ColorManager.secondary),
+    borderRadius: BorderRadius.all(Radius.circular(values.Size.s16))
+  ),
+  focusedBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: ColorManager.secondary),
+    borderRadius: BorderRadius.all(Radius.circular(values.Size.s16))
+  ),
 );

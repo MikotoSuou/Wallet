@@ -18,7 +18,7 @@ class PrimaryButton extends StatelessWidget {
     required this.onClicked,
     required this.text,
     this.icon,
-    this.padding,
+    this.padding = const EdgeInsets.all(values.Size.s12),
     this.margin,
     this.backgroundColor = ColorManager.secondary,
   });
@@ -40,6 +40,36 @@ class PrimaryButton extends StatelessWidget {
       label: Text(
         text,
         style: Theme.of(context).textTheme.labelMedium,
+      ),
+    ),
+  );
+}
+
+
+class SecondaryButton extends StatelessWidget {
+  final VoidCallback? onClicked;
+  final Widget icon;
+  final EdgeInsetsGeometry? padding;
+
+  const SecondaryButton({
+    super.key,
+    required this.onClicked,
+    required this.icon,
+    this.padding = const EdgeInsets.all(values.Size.s12),
+  });
+
+  @override
+  Widget build(BuildContext context) => InkWell(
+    onTap: (){},
+    borderRadius: BorderRadius.circular(values.Size.s16),
+    child: Ink(
+      decoration: BoxDecoration(
+        color: ColorManager.secondary,
+        borderRadius: BorderRadius.circular(values.Size.s16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(values.Size.s12),
+        child: icon,
       ),
     ),
   );

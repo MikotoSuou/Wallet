@@ -1,8 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wallet/core/navigation/routes.dart';
 import 'package:wallet/core/widgets/buttons.dart';
 import 'package:wallet/core/widgets/decorations.dart';
+import 'package:wallet/features/home/presentation/cubit/home_cubit.dart';
 import 'package:wallet/features/home/presentation/widgets/home_balance.dart';
 import 'package:wallet/features/home/presentation/widgets/home_balance_toggle.dart';
 import 'package:wallet/res/assets.dart';
@@ -53,18 +57,17 @@ class HomeContent extends StatelessWidget {
                     Expanded(
                       child: PrimaryButton(
                         icon: SvgPicture.asset(SvgAssets.icSendMoney),
-                        onClicked: () {},
+                        onClicked: () => context.push(Routes.sendMoney, extra: context.read<HomeCubit>().state.balance),
                         text: Strings.send,
                       ),
                     ),
 
                     const Space(width: values.Size.s10),
 
-                    IconButton(
-                      onPressed: () {},
+                    SecondaryButton(
+                      onClicked: () {},
                       icon: SvgPicture.asset(SvgAssets.icTransactions),
-                      style: IconButton.styleFrom(backgroundColor: ColorManager.secondary),
-                    )
+                    ),
                   ],
                 ),
 

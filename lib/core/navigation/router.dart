@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wallet/core/di/usecase_module.dart';
 import 'package:wallet/core/navigation/routes.dart';
 import 'package:wallet/features/home/presentation/home_screen.dart';
+import 'package:wallet/features/send_money/presentation/send_money_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -22,17 +23,15 @@ final router = GoRouter(
       },
     ),
 
-    // // send money route
-    // GoRoute(
-    //   parentNavigatorKey: rootNavigatorKey,
-    //   path: Routes.productDetail,
-    //   pageBuilder: (context, state) {
-    //     initProductDetailDependencies();
-    //     final args = state.extra as int;
-    //     return AppTransition.slide(state: state, child: ProductDetailScreen(productId: args));
-    //   }
-    // ),
-
+    // send money route
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: Routes.sendMoney,
+      pageBuilder: (context, state) {
+        final args = state.extra as double;
+        return AppTransition.slide(state: state, child: SendMoneyScreen(availableBalance: args));
+      }
+    ),
   ],
 
 );
