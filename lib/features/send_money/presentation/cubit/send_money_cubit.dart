@@ -24,8 +24,8 @@ class SendMoneyCubit extends Cubit<SendMoneyState> {
     final result = await _sendMoneyUseCase(balance: _balance, amountToSend: state.amount);
 
     result.fold(
-      (error) => { print("BJTEST :: ${error.message}") },
-      (success) => { print("BJTEST :: success") },
+      (error) => emit(state.copyWith(status: Status.failed, error: error.message)) ,
+      (success) => emit(state.copyWith(status: Status.success)),
     );
   }
 }
