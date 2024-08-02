@@ -11,6 +11,7 @@ Run local server:
 2. Run **npm install**
 3. Start the server with **npm run json:server**
 
+
 Build app in an emulator:
 1. Open an android emulator
 2. Update the baseUrl in lib > core > utils > constants.dart (change localhost to your IP)
