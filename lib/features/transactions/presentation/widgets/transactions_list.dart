@@ -17,7 +17,7 @@ class TransactionsList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Expanded(
+  Widget build(BuildContext context) => SizedBox.expand(
     child: ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: values.Size.s16),
       separatorBuilder: (context, index) => const Divider(color: ColorManager.lightGrey, thickness: 2),
