@@ -9,5 +9,5 @@ class Strings {
   static const sendMoney = "Send money";
   static const amountToSend = "Amount to send:";
   static const enterAmount = "Enter amount";
-  static const submit = "Submit";
+  static const moneySent = "Money sent!";
 }

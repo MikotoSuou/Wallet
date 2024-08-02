@@ -25,7 +25,7 @@ class SendMoneyCubit extends Cubit<SendMoneyState> {
 
     result.fold(
       (error) => emit(state.copyWith(status: Status.failed, error: error.message)) ,
-      (success) => emit(state.copyWith(status: Status.success)),
+      (success) => emit(state.copyWith(status: Status.success, amount: 0.0)),
     );
   }
 }
