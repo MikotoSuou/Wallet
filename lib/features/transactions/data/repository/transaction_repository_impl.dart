@@ -23,7 +23,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
     try {
       final response = await api.transactionsService();
-      final data = response.map((transaction) => transaction.toDomain()).toList();
+      final data = response.map((transaction) => transaction.toDomain).toList();
       return Right(data);
     } catch (error) {
       return const Left(ServerFailure());

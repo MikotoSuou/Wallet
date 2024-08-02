@@ -26,7 +26,7 @@ class TransactionResponse extends Equatable {
 
   factory TransactionResponse.fromJson(Map<String, dynamic> json) => _$TransactionResponseFromJson(json);
 
-  Transaction toDomain() => Transaction(
+  Transaction get toDomain => Transaction(
     id: id ?? Constants.emptyString,
     amount: amount ?? 0.0,
     date: date ?? Constants.emptyString,
