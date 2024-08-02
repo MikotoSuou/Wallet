@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:wallet/core/data_source/remote/api_service.dart';
 import 'package:wallet/core/error/failure.dart';
 import 'package:wallet/core/utils/network_info.dart';
-import 'package:wallet/features/home/data/mappers/user_response_mapper.dart';
 import 'package:wallet/features/home/domain/entities/user_detail.dart';
 import 'package:wallet/features/home/domain/repository/home_repository.dart';
 
