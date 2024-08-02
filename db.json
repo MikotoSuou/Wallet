@@ -1,8 +1,10 @@
 {
-  "user": {
-    "id": "1",
-    "name": "User",
-    "balance": 500
-  },
+  "users": [
+    {
+      "id": "1",
+      "name": "User",
+      "balance": 500
+    }
+  ],
   "transactions": []
 }
