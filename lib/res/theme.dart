@@ -17,7 +17,7 @@ ThemeData get applicationTheme => ThemeData(
 
 /// text theme
 TextTheme get _textTheme => TextTheme(
-  /// Use for error / hint
+  /// Use for hint
   displaySmall: regularTextStyle(color: ColorManager.darkGray, fontSize: FontSize.s14),
 
   headlineMedium: boldTextStyle(color: ColorManager.black, fontSize: FontSize.s16),
@@ -25,11 +25,13 @@ TextTheme get _textTheme => TextTheme(
   /// Use for titles
   titleLarge: boldTextStyle(color: ColorManager.black, fontSize: FontSize.s20),
   titleMedium: regularTextStyle(color: ColorManager.darkGray, fontSize: FontSize.s14),
+  titleSmall: regularTextStyle(color: ColorManager.darkGray, fontSize: FontSize.s12),
 
   /// Use for button text
   labelMedium: boldTextStyle(color: ColorManager.primary, fontSize: FontSize.s16),
 
   /// Use in long messages / text
+  bodyLarge: boldTextStyle(color: ColorManager.black, fontSize: FontSize.s14),
   bodyMedium: regularTextStyle(color: ColorManager.black, fontSize: FontSize.s14),
   bodySmall: regularTextStyle(color: ColorManager.black, fontSize: FontSize.s12),
 );

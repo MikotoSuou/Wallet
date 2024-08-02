@@ -13,4 +13,7 @@ class Strings {
 
   // transactions
   static const transactions = "Transactions";
+  static const noTransactions = "No existing transaction";
+  static const debitFrom = "Debit from";
+  static const wallet = "Wallet";
 }

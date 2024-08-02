@@ -19,9 +19,15 @@ class TransactionsCubit extends Cubit<TransactionsState> {
 
     result.fold(
       (error) => emit(TransactionsState.failed(error.message)),
-      (data) => (data.isNotEmpty)
-          ? emit(TransactionsState.success(data))
-          : emit(const TransactionsState.empty()),
+      (data) {
+        if(data.isEmpty) {
+          emit(const TransactionsState.empty());
+          return;
+        }
+
+        final reversedList = data.reversed.toList();
+        emit(TransactionsState.success(reversedList));
+      },
     );
   }
 }

@@ -28,18 +28,23 @@ void main() {
       Transaction(id: "2", amount: 1.0, date: "Aug 02, 2024", time: "12:12 PM"),
     ];
 
+    const expectedResult = [
+      Transaction(id: "2", amount: 1.0, date: "Aug 02, 2024", time: "12:12 PM"),
+      Transaction(id: "1", amount: 1.0, date: "Aug 02, 2024", time: "11:11 AM"),
+    ];
+
     void setUpMockGetTransactionsSuccess() => when(getTransactionsUseCase())
         .thenAnswer((_) async => const Right(transactions));
 
     blocTest<TransactionsCubit, TransactionsState>(
-      "should update the state to success state",
+      "should update the state to success state and the list of transactions should be in reversed order",
       setUp: () => setUpMockGetTransactionsSuccess(),
       build: () => cubit,
       act: (cubit) => cubit.getTransactions(),
       verify: (_) => verify(getTransactionsUseCase()).called(1),
       expect: () => const [
         TransactionsState.loading(),
-        TransactionsState.success(transactions)
+        TransactionsState.success(expectedResult)
       ],
     );
 
