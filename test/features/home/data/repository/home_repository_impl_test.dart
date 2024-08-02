@@ -34,17 +34,10 @@ void main() {
       expect(result, const Left(NetworkFailure()));
     });
 
-    test('should check if the device is online', () async {
-      when(networkInfo.isNetworkConnected).thenAnswer((_) async => true);
-
-      repository.getUser();
-
-      verify(networkInfo.isNetworkConnected);
-    });
-
     test('should return the correct data on successful get user', () async {
       const response = UserResponse(id: "1", name: "test", balance: 1.0);
       const expectedResult = UserDetail(id: "1", name: "test", balance: 1.0);
+      when(networkInfo.isNetworkConnected).thenAnswer((_) async => true);
       when(api.userService()).thenAnswer((_) async => Future.value(response));
 
       final result = await repository.getUser();
@@ -54,6 +47,7 @@ void main() {
     });
 
     test('should return failure on failed get user', () async {
+      when(networkInfo.isNetworkConnected).thenAnswer((_) async => true);
       when(api.userService()).thenThrow(const ServerFailure());
 
       final result = await repository.getUser();

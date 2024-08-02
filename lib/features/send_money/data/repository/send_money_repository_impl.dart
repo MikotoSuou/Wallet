@@ -24,8 +24,8 @@ class SendMoneyRepositoryImpl implements SendMoneyRepository {
 
     try {
       final request = SendMoneyRequest(amount: amount, date: currentDate, time: currentTime);
-      final response = await api.sendMoneyService(request);
-      return Right(response);
+      await api.sendMoneyService(request);
+      return const Right(null);
     } catch (error) {
       return const Left(ServerFailure());
     }
@@ -40,8 +40,8 @@ class SendMoneyRepositoryImpl implements SendMoneyRepository {
     try {
       final newBalance = balance - amountToDeduct;
       final request = UpdateBalanceRequest(balance: newBalance);
-      final response = await api.updateBalanceService(request);
-      return Right(response);
+      await api.updateBalanceService(request);
+      return const Right(null);
     } catch (error) {
       return const Left(ServerFailure());
     }
