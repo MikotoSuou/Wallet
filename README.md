@@ -11,8 +11,9 @@ Run local server:
 2. Run **npm install**
 3. Start the server with **npm run json:server**
 
-Build android app with cable:
-1. Connect your device to your local machine
+
+Build app in an emulator:
+1. Open an android emulator
 2. Update the baseUrl in lib > core > utils > constants.dart (change localhost to your IP)
 3. Run **flutter run**
 
