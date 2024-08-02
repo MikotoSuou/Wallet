@@ -7,7 +7,7 @@ class Constants {
   static const String currencySymbol = "₱";
 
   // api
-  static const String baseUrl = "http://192.168.250.95:3000/";
+  static const String baseUrl = "http://localhost:3000/"; // change localhost to your IP
   static const Map<String, String> headers = {
     "content-type": "application/json; charset=utf-8",
     "accept": "application/json; charset=utf-8",
