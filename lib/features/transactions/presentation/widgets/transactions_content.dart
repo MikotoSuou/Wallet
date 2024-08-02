@@ -11,7 +11,8 @@ class TransactionsContent extends StatelessWidget {
   Widget build(BuildContext context) => BlocBuilder<TransactionsCubit, TransactionsState>(
     builder: (context, state) => state.when(
       initial: () => const SizedBox.shrink(),
-      loading: () => const SizedBox.shrink(), // use shimmer,
+      loading: () => const SizedBox.shrink(), // use shimmer
+      empty: () => const SizedBox.shrink(),
       success: (transactions) => TransactionList(transactions: transactions),
       failed: (error) => const SizedBox.shrink(),
     ),

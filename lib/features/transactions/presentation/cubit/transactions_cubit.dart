@@ -19,7 +19,9 @@ class TransactionsCubit extends Cubit<TransactionsState> {
 
     result.fold(
       (error) => emit(TransactionsState.failed(error.message)),
-      (data) => emit(TransactionsState.success(data)),
+      (data) => (data.isNotEmpty)
+          ? emit(TransactionsState.success(data))
+          : emit(const TransactionsState.empty()),
     );
   }
 }
