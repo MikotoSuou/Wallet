@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wallet/core/utils/constants.dart';
-import 'package:wallet/core/utils/enums.dart';
 import 'package:wallet/core/utils/helpers.dart';
 import 'package:wallet/core/widgets/decorations.dart';
-import 'package:wallet/features/send_money/presentation/cubit/send_money_cubit.dart';
+import 'package:wallet/features/send_money/presentation/cubit/send_money/send_money_cubit.dart';
+import 'package:wallet/features/send_money/presentation/cubit/send_money_form/send_money_form_cubit.dart';
 import 'package:wallet/res/assets.dart';
 import 'package:wallet/res/strings.dart';
 import 'package:wallet/res/values.dart' as values;
@@ -58,21 +58,22 @@ class _SendMoneyAmountFieldState extends State<SendMoneyAmountField> {
 
   @override
   Widget build(BuildContext context) => BlocListener<SendMoneyCubit, SendMoneyState>(
-    listener: (context, state) => switch(state.status) {
-      Status.success => {
+    listener: (context, state) => state.maybeWhen(
+      success: () => {
         _controller.clear(),
+        context.read<SendMoneyFormCubit>().clearAmount(),
         hideSoftKeyboard(),
         showPrompt(AnimAssets.animSuccess, Strings.moneySent),
       },
-      Status.failed => {
+      failed: (error) => {
         hideSoftKeyboard(),
-        showPrompt(AnimAssets.animError, state.error),
+        showPrompt(AnimAssets.animError, error),
       },
-      _ => {}
-    },
+      orElse: () => null
+    ),
     child: TextField(
       controller: _controller,
-      onChanged: (value) =>  context.read<SendMoneyCubit>().amountChanged(value),
+      onChanged: (value) => context.read<SendMoneyFormCubit>().amountChanged(value),
       keyboardType: TextInputType.number,
       inputFormatters: [
         CurrencyTextInputFormatter.currency(
@@ -85,4 +86,10 @@ class _SendMoneyAmountFieldState extends State<SendMoneyAmountField> {
       decoration: const InputDecoration(hintText: Strings.enterAmount),
     ),
   );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
