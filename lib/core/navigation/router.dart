@@ -5,6 +5,7 @@ import 'package:wallet/core/di/usecase_module.dart';
 import 'package:wallet/core/navigation/routes.dart';
 import 'package:wallet/features/home/presentation/home_screen.dart';
 import 'package:wallet/features/send_money/presentation/send_money_screen.dart';
+import 'package:wallet/features/transactions/presentation/transactions_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -31,7 +32,17 @@ final router = GoRouter(
         initSendMoneyDependencies();
         final args = state.extra as double;
         return AppTransition.slide(state: state, child: SendMoneyScreen(balance: args));
-      }
+      },
+    ),
+
+    // transactions route
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: Routes.transactions,
+      pageBuilder: (context, state) {
+        initTransactionsDependencies();
+        return AppTransition.slide(state: state, child: const TransactionsScreen());
+      },
     ),
   ],
 

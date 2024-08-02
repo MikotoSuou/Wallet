@@ -10,4 +10,7 @@ class Strings {
   static const amountToSend = "Amount to send:";
   static const enterAmount = "Enter amount";
   static const moneySent = "Money sent!";
+
+  // transactions
+  static const transactions = "Transactions";
 }

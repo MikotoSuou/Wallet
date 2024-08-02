@@ -62,7 +62,7 @@ class HomeContent extends StatelessWidget {
                     const Space(width: values.Size.s10),
 
                     SecondaryButton(
-                      onClicked: () {},
+                      onClicked: () => context.push(Routes.transactions),
                       icon: SvgPicture.asset(SvgAssets.icTransactions),
                     ),
                   ],
