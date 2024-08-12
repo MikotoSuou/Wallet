@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:wallet/features/send_money/presentation/cubit/send_money_form/send_money_form_cubit.dart';
+import 'package:wallet/features/home/presentation/cubit/home_cubit.dart';
 
 import '../../../../core/widgets/buttons.dart';
 import '../../../../res/assets.dart';
@@ -12,8 +12,9 @@ class SendMoneyButton extends StatelessWidget {
   const SendMoneyButton({super.key});
 
   void _onSubmitClicked(BuildContext context) {
-    final amount = context.read<SendMoneyFormCubit>().state.amount;
-    context.read<SendMoneyCubit>().sendClicked(amount);
+    final balance = context.read<HomeCubit>().state.balance;
+    final amount = context.read<SendMoneyCubit>().state.amount;
+    context.read<SendMoneyCubit>().sendClicked(balance, amount);
   }
 
   @override

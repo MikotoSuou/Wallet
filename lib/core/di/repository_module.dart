@@ -5,7 +5,7 @@ import 'package:wallet/features/send_money/data/repository/send_money_repository
 import 'package:wallet/features/send_money/domain/repository/send_money_repository.dart';
 import 'package:wallet/features/transactions/data/repository/transaction_repository_impl.dart';
 import 'package:wallet/features/transactions/domain/repository/transaction_repository.dart';
-import 'di.dart';
+import 'app_module.dart';
 
 class RepositoryModule {
   static Future<void> get initialize async {

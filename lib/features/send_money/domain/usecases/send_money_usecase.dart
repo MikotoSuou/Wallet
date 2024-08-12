@@ -8,7 +8,7 @@ class SendMoneyUseCase {
   final SendMoneyRepository _repository;
   SendMoneyUseCase(this._repository);
 
-  Future<Either<Failure, void>> call({
+  Future<Either<Failure, UpdatedBalance>> call({
     required double balance,
     required double amountToSend,
   }) async {
@@ -21,11 +21,10 @@ class SendMoneyUseCase {
     }
 
     final result = await _repository.sendMoney(amountToSend);
-
-    if (result.isLeft()) {
-      return result;
-    }
-
-    return await _repository.updateBalance(balance, amountToSend);
+    final newBalance = balance - amountToSend;
+    return result.fold(
+      (error) => Left(error),
+      (success) async => await _repository.updateBalance(newBalance)
+    );
   }
 }

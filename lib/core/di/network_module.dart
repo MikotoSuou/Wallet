@@ -3,7 +3,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:wallet/core/data_source/remote/dio_factory.dart';
 import '../data_source/remote/api_service.dart';
 import '../utils/network_info.dart';
-import 'di.dart';
+import 'app_module.dart';
 
 class NetworkModule {
   static Future<void> get initialize async {

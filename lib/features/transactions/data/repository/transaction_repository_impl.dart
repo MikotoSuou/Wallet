@@ -23,6 +23,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
     try {
       final response = await api.transactionsService();
+      await Future.delayed(const Duration(seconds: 3));
       final data = response.map((transaction) => transaction.toDomain).toList();
       return Right(data);
     } catch (error) {

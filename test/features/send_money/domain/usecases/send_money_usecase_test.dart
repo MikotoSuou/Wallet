@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wallet/core/error/failure.dart';
-import 'package:wallet/features/home/domain/entities/user_detail.dart';
 import 'package:wallet/features/send_money/domain/usecases/send_money_usecase.dart';
 import '../repository/send_money_repository_mock.mocks.dart';
 
@@ -61,19 +60,20 @@ void main() {
   test('should return void when sendMoney succeeds and balance is updated', () async {
     const balance = 100.0;
     const amount = 50.0;
+    const newBalance = 50.0;
     when(repository.sendMoney(amount))
         .thenAnswer((_) async => const Right<Failure, void>(null));
-    when(repository.updateBalance(balance, amount))
-        .thenAnswer((_) async => const Right<Failure, void>(null));
+    when(repository.updateBalance(newBalance))
+        .thenAnswer((_) async => const Right(newBalance));
 
     final result = await sendMoneyUseCase(
       balance: balance,
       amountToSend: amount,
     );
 
-    expect(result, const Right<Failure, void>(null));
+    expect(result, const Right(newBalance));
     verify(repository.sendMoney(amount)).called(1);
-    verify(repository.updateBalance(balance, amount)).called(1);
+    verify(repository.updateBalance(newBalance)).called(1);
     verifyNoMoreInteractions(repository);
   });
 }

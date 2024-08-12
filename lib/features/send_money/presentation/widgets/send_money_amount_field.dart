@@ -5,8 +5,8 @@ import 'package:lottie/lottie.dart';
 import 'package:wallet/core/utils/constants.dart';
 import 'package:wallet/core/utils/helpers.dart';
 import 'package:wallet/core/widgets/decorations.dart';
+import 'package:wallet/features/home/presentation/cubit/home_cubit.dart';
 import 'package:wallet/features/send_money/presentation/cubit/send_money/send_money_cubit.dart';
-import 'package:wallet/features/send_money/presentation/cubit/send_money_form/send_money_form_cubit.dart';
 import 'package:wallet/res/assets.dart';
 import 'package:wallet/res/strings.dart';
 import 'package:wallet/res/values.dart' as values;
@@ -27,7 +27,8 @@ class _SendMoneyAmountFieldState extends State<SendMoneyAmountField> {
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
-        height: values.Size.s250,
+        key: const ValueKey('sendMoneyBottomSheet'),
+        height: MediaQuery.sizeOf(context).height * 0.35,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: values.Size.s16),
         child: Column(
@@ -58,22 +59,25 @@ class _SendMoneyAmountFieldState extends State<SendMoneyAmountField> {
 
   @override
   Widget build(BuildContext context) => BlocListener<SendMoneyCubit, SendMoneyState>(
-    listener: (context, state) => state.maybeWhen(
-      success: () => {
+    listenWhen: (prev, current) => (prev.status != current.status && (current.status == SendMoneyStatus.success || current.status == SendMoneyStatus.failed)),
+    listener: (context, state) => switch(state.status) {
+      SendMoneyStatus.success => {
         _controller.clear(),
-        context.read<SendMoneyFormCubit>().clearAmount(),
+        context.read<SendMoneyCubit>().clearAmount(),
+        context.read<HomeCubit>().updateBalance(state.remainingBalance),
         hideSoftKeyboard(),
         showPrompt(AnimAssets.animSuccess, Strings.moneySent),
       },
-      failed: (error) => {
+      SendMoneyStatus.failed => {
         hideSoftKeyboard(),
-        showPrompt(AnimAssets.animError, error),
+        showPrompt(AnimAssets.animError, state.error),
       },
-      orElse: () => null
-    ),
+      _ => null
+    },
     child: TextField(
+      key: const ValueKey('moneyInputField'),
       controller: _controller,
-      onChanged: (value) => context.read<SendMoneyFormCubit>().amountChanged(value),
+      onChanged: (value) => context.read<SendMoneyCubit>().amountChanged(value),
       keyboardType: TextInputType.number,
       inputFormatters: [
         CurrencyTextInputFormatter.currency(

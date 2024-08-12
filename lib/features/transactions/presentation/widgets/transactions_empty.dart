@@ -10,6 +10,7 @@ class TransactionsEmpty extends StatelessWidget {
     child: Text(
       Strings.noTransactions,
       style: Theme.of(context).textTheme.titleLarge,
+      textAlign: TextAlign.center,
     ),
   );
 }

@@ -1,9 +1,13 @@
 part of 'send_money_cubit.dart';
 
+enum SendMoneyStatus { initial, loading, success, failed }
+
 @freezed
 class SendMoneyState with _$SendMoneyState {
-  const factory SendMoneyState.initial() = _Initial;
-  const factory SendMoneyState.loading() = _Loading;
-  const factory SendMoneyState.success() = _Success;
-  const factory SendMoneyState.failed(String error) = _Failed;
+  const factory SendMoneyState({
+    @Default(SendMoneyStatus.initial) SendMoneyStatus status,
+    @Default(0.0) double remainingBalance,
+    @Default(0.0) double amount,
+    @Default(Constants.emptyString) String error,
+  }) = _SendMoneyState;
 }

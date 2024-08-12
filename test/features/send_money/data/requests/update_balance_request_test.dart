@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wallet/features/send_money/data/requests/send_money_request.dart';
 import 'package:wallet/features/send_money/data/requests/update_balance_request.dart';
 import '../../../../fixtures/stub_json//json_reader.dart';
 import '../../../../fixtures/stub_json/fixtures.dart';

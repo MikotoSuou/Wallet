@@ -18,8 +18,8 @@ void main() {
     cubit = HomeCubit(getUserUseCase);
   });
 
-  test("initial state should be HomeStatus.initial", () {
-    expect(cubit.state.status, HomeStatus.initial);
+  test("initial state should be HomeStatus.loading", () {
+    expect(cubit.state.status, HomeStatus.loading);
   });
 
   group("getUser", () {
@@ -34,14 +34,6 @@ void main() {
       act: (cubit) => cubit.getUser(),
       verify: (_) => verify(getUserUseCase()).called(1),
       expect: () => [
-        const HomeState(
-          status: HomeStatus.loading,
-          name: Constants.emptyString,
-          balance: 0.0,
-          isToggled: true,
-          error: Constants.emptyString,
-        ),
-
         const HomeState(
           status: HomeStatus.success,
           name: "test",
@@ -63,16 +55,8 @@ void main() {
       verify: (_) => verify(getUserUseCase()).called(1),
       expect: () => [
         const HomeState(
-          status: HomeStatus.loading,
-          name: Constants.emptyString,
-          balance: 0.0,
-          isToggled: true,
-          error: Constants.emptyString,
-        ),
-
-        const HomeState(
           status: HomeStatus.failed,
-          name: Constants.emptyString,
+          name: "Hello!",
           balance: 0.0,
           isToggled: true,
           error: "Something went wrong, please try again later",
@@ -88,8 +72,8 @@ void main() {
       act: (cubit) => cubit.toggleClicked(),
       expect: () => [
         const HomeState(
-          status: HomeStatus.initial,
-          name: Constants.emptyString,
+          status: HomeStatus.loading,
+          name: "Hello!",
           balance: 0.0,
           isToggled: false,
           error: Constants.emptyString,

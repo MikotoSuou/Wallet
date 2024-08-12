@@ -48,8 +48,10 @@ void main() {
 
       final result = await repository.getTransactions();
 
-      expect(result.isRight(), isTrue);
-      // expect(result, expectedResult);
+      result.fold(
+        (error) => fail('test failed'),
+        (data) => expect(data, expectedResult)
+      );
     });
 
     test('should return failure on failed get transactions', () async {

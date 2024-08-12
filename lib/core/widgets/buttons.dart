@@ -27,10 +27,10 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: width,
     margin: margin,
-    child: TextButton.icon(
+    child: FilledButton.icon(
       icon: icon,
       onPressed: onClicked,
-      style: TextButton.styleFrom(
+      style: FilledButton.styleFrom(
         padding: padding,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wallet/core/utils/helpers.dart';
 
 part 'send_money_request.g.dart';
 
@@ -20,6 +21,12 @@ class SendMoneyRequest extends Equatable {
 
   factory SendMoneyRequest.fromJson(Map<String, dynamic> json) => _$SendMoneyRequestFromJson(json);
   Map<String, dynamic> toJson() => _$SendMoneyRequestToJson(this);
+
+  factory SendMoneyRequest.fromDomain(double amount) => SendMoneyRequest(
+    amount: amount,
+    date: currentDate,
+    time: currentTime,
+  );
 
   @override
   List<Object?> get props => [amount, date, time];

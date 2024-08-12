@@ -13,6 +13,7 @@ class HomeBalance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<HomeCubit, HomeState>(
+    buildWhen: (prev, current) => (prev.status != current.status || prev.isToggled != current.isToggled || prev.balance != current.balance),
     builder: (context, state) {
       if(state.status == HomeStatus.loading) {
         return const ShimmerWidget(height: values.Size.s20);

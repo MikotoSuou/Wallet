@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:wallet/core/data_source/remote/api_service.dart';
 import 'package:wallet/core/error/failure.dart';
-import 'package:wallet/core/utils/helpers.dart';
 import 'package:wallet/core/utils/network_info.dart';
 import 'package:wallet/features/send_money/data/requests/send_money_request.dart';
 import 'package:wallet/features/send_money/data/requests/update_balance_request.dart';
@@ -23,7 +22,7 @@ class SendMoneyRepositoryImpl implements SendMoneyRepository {
     }
 
     try {
-      final request = SendMoneyRequest(amount: amount, date: currentDate, time: currentTime);
+      final request = SendMoneyRequest.fromDomain(amount);
       await api.sendMoneyService(request);
       return const Right(null);
     } catch (error) {
@@ -32,16 +31,15 @@ class SendMoneyRepositoryImpl implements SendMoneyRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateBalance(double balance, double amountToDeduct) async {
+  Future<Either<Failure, UpdatedBalance>> updateBalance(double newBalance) async {
     if(!await networkInfo.isNetworkConnected) {
       return const Left(NetworkFailure());
     }
 
     try {
-      final newBalance = balance - amountToDeduct;
       final request = UpdateBalanceRequest(balance: newBalance);
       await api.updateBalanceService(request);
-      return const Right(null);
+      return Right(newBalance);
     } catch (error) {
       return const Left(ServerFailure());
     }

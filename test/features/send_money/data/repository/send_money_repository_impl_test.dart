@@ -62,11 +62,12 @@ void main() {
 
   group('updateBalance', () {
     test('should return failure when the device is offline', () async {
-      const balance = 500.0;
       const amount = 1.0;
+      const balance = 500.0;
+      const newBalance = balance - amount;
       when(networkInfo.isNetworkConnected).thenAnswer((_) async => false);
 
-      final result = await repository.updateBalance(balance, amount);
+      final result = await repository.updateBalance(newBalance);
 
       expect(result.isLeft(), isTrue);
       expect(result, const Left(NetworkFailure()));
@@ -77,23 +78,23 @@ void main() {
       const balance = 500.0;
       const newBalance = balance - amount;
       const request = UpdateBalanceRequest(balance: newBalance);
-      const expectedResult = Right(null);
       when(networkInfo.isNetworkConnected).thenAnswer((_) async => true);
-      when(api.updateBalanceService(request)).thenAnswer((_) async => expectedResult);
+      when(api.updateBalanceService(request)).thenAnswer((_) async => const Right(newBalance));
 
-      final result = await repository.updateBalance(balance, amount);
+      final result = await repository.updateBalance(newBalance);
 
       expect(result.isRight(), isTrue);
-      expect(result, expectedResult);
+      expect(result, const Right(newBalance));
     });
 
     test('should return failure on failed update balance', () async {
       const amount = 1.0;
       const balance = 500.0;
+      const newBalance = balance - amount;
       when(networkInfo.isNetworkConnected).thenAnswer((_) async => true);
       when(api.updateBalanceService(any)).thenThrow(const ServerFailure());
 
-      final result = await repository.updateBalance(amount, balance);
+      final result = await repository.updateBalance(newBalance);
 
       expect(result.isLeft(), isTrue);
       expect(result, const Left(ServerFailure()));

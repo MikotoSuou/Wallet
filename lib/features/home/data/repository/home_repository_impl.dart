@@ -22,6 +22,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
     try {
       final response = await api.userService();
+      await Future.delayed(const Duration(seconds: 3));
       return Right(response.toDomain);
     } catch (error) {
       return const Left(ServerFailure());

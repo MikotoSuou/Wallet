@@ -20,9 +20,12 @@ class HomeBalanceToggle extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) => SvgPicture.asset(
-          (state.isToggled) ? SvgAssets.icEyeOpen : SvgAssets.icEyeClose
-        ),
+        buildWhen: (prev, current) => (prev.isToggled != current.isToggled),
+        builder: (context, state) {
+          return SvgPicture.asset(
+            (state.isToggled) ? SvgAssets.icEyeOpen : SvgAssets.icEyeClose
+          );
+        }
       ),
     ),
   );

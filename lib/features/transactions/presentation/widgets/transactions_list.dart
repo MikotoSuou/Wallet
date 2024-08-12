@@ -1,68 +1,31 @@
 
 import 'package:flutter/material.dart';
-import 'package:wallet/core/utils/extensions/double_ext.dart';
-import 'package:wallet/core/widgets/decorations.dart';
-import 'package:wallet/res/colors.dart';
-import 'package:wallet/res/strings.dart';
+import 'package:wallet/features/transactions/presentation/widgets/transactions_list_tile.dart';
 import 'package:wallet/res/values.dart' as values;
 
-import '../../domain/entities/transaction.dart';
+import '../cubit/transactions_cubit.dart';
 
 class TransactionsList extends StatelessWidget {
-  final List<Transaction> transactions;
+  final List<TransactionItem> transactionItems;
 
   const TransactionsList({
     super.key,
-    required this.transactions
+    required this.transactionItems
   });
 
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: values.Size.s16),
-      separatorBuilder: (context, index) => const Divider(color: ColorManager.lightGrey, thickness: 2),
-      itemCount: transactions.length,
-      itemBuilder: (context, index) => Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                Strings.debitFrom,
-                style: Theme.of(context).textTheme.titleSmall,
-                overflow: TextOverflow.ellipsis,
-              ),
+  Widget build(BuildContext context) => ListView.builder(
+    padding: const EdgeInsets.symmetric(horizontal: values.Size.s16),
+    itemCount: transactionItems.length,
+    itemBuilder: (context, index) {
+      final item = transactionItems[index];
 
-              const Space(width: values.Size.s10),
-
-              Text(
-                "${transactions[index].date} - ${transactions[index].time}",
-                style: Theme.of(context).textTheme.titleSmall,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                Strings.wallet,
-                style: Theme.of(context).textTheme.bodyLarge,
-                overflow: TextOverflow.ellipsis,
-              ),
-
-              const Space(width: values.Size.s10),
-
-              Text(
-                "-${transactions[index].amount.toStringAmount}",
-                style: Theme.of(context).textTheme.bodyLarge,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
+      return item.when(
+        date: (date) => (index == 0 || index == transactionItems.length-1)
+            ? TransactionDate(date: date)
+            : TransactionDateWithDivider(date: date),
+        transaction: (transaction) => TransactionTile(transaction: transaction),
+      );
+    },
   );
 }

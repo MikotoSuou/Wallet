@@ -1,10 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wallet/core/di/usecase_module.dart';
+import 'package:wallet/core/di/app_module.dart';
 import 'package:wallet/core/navigation/routes.dart';
+import 'package:wallet/features/home/presentation/cubit/home_cubit.dart';
 import 'package:wallet/features/home/presentation/home_screen.dart';
+import 'package:wallet/features/send_money/presentation/cubit/send_money/send_money_cubit.dart';
 import 'package:wallet/features/send_money/presentation/send_money_screen.dart';
+import 'package:wallet/features/transactions/domain/usecases/get_transactions_usecase.dart';
+import 'package:wallet/features/transactions/presentation/cubit/transactions_cubit.dart';
 import 'package:wallet/features/transactions/presentation/transactions_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -18,10 +23,14 @@ final router = GoRouter(
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
       path: Routes.home,
-      pageBuilder: (context, state) {
-        initHomeDependencies();
-        return AppTransition.none(state: state, child: const HomeScreen());
-      },
+      pageBuilder: (context, state) => AppTransition.none(
+        state: state,
+        child: BlocProvider(
+          create: (_) => instance<HomeCubit>()
+            ..getUser(),
+          child: const HomeScreen(),
+        ),
+      ),
     ),
 
     // send money route
@@ -29,9 +38,16 @@ final router = GoRouter(
       parentNavigatorKey: rootNavigatorKey,
       path: Routes.sendMoney,
       pageBuilder: (context, state) {
-        initSendMoneyDependencies();
-        final args = state.extra as double;
-        return AppTransition.slide(state: state, child: SendMoneyScreen(balance: args));
+        return AppTransition.slide(
+          state: state,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: instance<HomeCubit>()),
+              BlocProvider(create: (_) => instance<SendMoneyCubit>()),
+            ],
+            child: const SendMoneyScreen(),
+          ),
+        );
       },
     ),
 
@@ -39,10 +55,14 @@ final router = GoRouter(
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
       path: Routes.transactions,
-      pageBuilder: (context, state) {
-        initTransactionsDependencies();
-        return AppTransition.slide(state: state, child: const TransactionsScreen());
-      },
+      pageBuilder: (context, state) => AppTransition.slide(
+        state: state,
+        child: BlocProvider(
+          create: (_) => instance<TransactionsCubit>()
+            ..getTransactions(),
+          child: const TransactionsScreen(),
+        ),
+      ),
     ),
   ],
 
